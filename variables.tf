@@ -1,3 +1,9 @@
+variable region {
+  type        = string
+  description = "AWS Region in which to provision resources."
+  default     = "us-west-2"
+}
+
 variable tag_owner {
   type        = string
   description = "Label to identify owner, will be used for tagging resources that are provisioned."
