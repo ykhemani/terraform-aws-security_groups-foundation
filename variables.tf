@@ -10,16 +10,16 @@ variable "owner_cidr_blocks" {
 }
 
 variable "prefix" {
-  type = string
-  default = "Naming prefix"
+  type        = string
+  description = "Naming prefix"
 }
 
 variable "org" {
-  type = string
+  type        = string
   description = "Terraform Cloud/Enterprise Organization Name"
 }
 
 variable "vpc_workspace" {
-  type = string
+  type        = string
   description = "Name of workspace where VPC was created."
 }
