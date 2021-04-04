@@ -11,7 +11,7 @@ provider "aws" {
   region = var.region
 }
 
-data terraform_remote_state vpc {
+data "terraform_remote_state" "vpc" {
   backend = "remote"
 
   config = {
@@ -22,9 +22,9 @@ data terraform_remote_state vpc {
   }
 }
 
-resource aws_security_group sg_ingress {
-  name          = "${var.tag_owner}_foundation_ingress_sg"
-  description   = "${var.tag_owner} Foundational Ingress Security Group"
+resource "aws_security_group" "sg_ingress" {
+  name          = "${var.owner}_foundation_ingress_sg"
+  description   = "${var.owner} Foundational Ingress Security Group"
   vpc_id        = data.terraform_remote_state.vpc.outputs.vpc_id
 
   # owner cidr blocks
@@ -44,15 +44,27 @@ resource aws_security_group sg_ingress {
   }
 
   tags = {
-    Owner = var.tag_owner
-    Name  = "${var.tag_owner}_foundation_ingress_sg"
+    Name               = "${var.owner}_foundation_ingress_sg"
+
+    owner              = var.owner
+    se-region          = var.se-region
+    purpose            = var.purpose
+    ttl                = var.ttl
+    terraform          = "true"
+    hc-internet-facing = var.hc-internet-facing
+    creator            = var.creator
+    customer           = var.customer
+    tfe-workspace      = var.tfe-workspace
+    lifecycle-action   = var.lifecycle-action
+    config-as-code     = var.config-as-code
+    repo               = var.repo
   }
 }
 
-resource aws_security_group sg_egress {
+resource "aws_security_group" "sg_egress" {
 
-  name          = "${var.tag_owner}_foundation_egress_sg"
-  description   = "${var.tag_owner} Foundational Egress Security Group"
+  name          = "${var.owner}_foundation_egress_sg"
+  description   = "${var.owner} Foundational Egress Security Group"
   vpc_id        = data.terraform_remote_state.vpc.outputs.vpc_id
 
   egress {
@@ -63,7 +75,19 @@ resource aws_security_group sg_egress {
   }
 
   tags = {
-    Owner = var.tag_owner
-    Name  = "${var.tag_owner}_foundation_egress_sg"
+    Name               = "${var.owner}_foundation_egress_sg"
+
+    owner              = var.owner
+    se-region          = var.se-region
+    purpose            = var.purpose
+    ttl                = var.ttl
+    terraform          = "true"
+    hc-internet-facing = var.hc-internet-facing
+    creator            = var.creator
+    customer           = var.customer
+    tfe-workspace      = var.tfe-workspace
+    lifecycle-action   = var.lifecycle-action
+    config-as-code     = var.config-as-code
+    repo               = var.repo
   }
 }
