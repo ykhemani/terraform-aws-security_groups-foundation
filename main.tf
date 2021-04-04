@@ -15,16 +15,16 @@ data "terraform_remote_state" "vpc" {
   backend = "remote"
 
   config = {
-    organization = "khemani"
+    organization = var.org
     workspaces = {
-      name = "terraform-aws-vpc-se_demos_dev-us_west_2"
+      name = var.vpc_workspace
     }
   }
 }
 
 resource "aws_security_group" "sg_ingress" {
-  name          = "${var.owner}_foundation_ingress_sg"
-  description   = "${var.owner} Foundational Ingress Security Group"
+  name          = "${var.prefix}_foundation_ingress_sg"
+  description   = "${var.prefix} Foundational Ingress Security Group"
   vpc_id        = data.terraform_remote_state.vpc.outputs.vpc_id
 
   # owner cidr blocks
@@ -44,7 +44,7 @@ resource "aws_security_group" "sg_ingress" {
   }
 
   tags = {
-    Name               = "${var.owner}_foundation_ingress_sg"
+    Name               = "${var.prefix}_foundation_ingress_sg"
 
     owner              = var.owner
     se-region          = var.se-region
@@ -63,8 +63,8 @@ resource "aws_security_group" "sg_ingress" {
 
 resource "aws_security_group" "sg_egress" {
 
-  name          = "${var.owner}_foundation_egress_sg"
-  description   = "${var.owner} Foundational Egress Security Group"
+  name          = "${var.prefix}_foundation_egress_sg"
+  description   = "${var.prefix} Foundational Egress Security Group"
   vpc_id        = data.terraform_remote_state.vpc.outputs.vpc_id
 
   egress {
@@ -75,7 +75,7 @@ resource "aws_security_group" "sg_egress" {
   }
 
   tags = {
-    Name               = "${var.owner}_foundation_egress_sg"
+    Name               = "${var.prefix}_foundation_egress_sg"
 
     owner              = var.owner
     se-region          = var.se-region
