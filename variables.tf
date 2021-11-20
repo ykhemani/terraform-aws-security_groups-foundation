@@ -1,7 +1,7 @@
 variable "region" {
   type        = string
   description = "AWS Region in which to provision resources."
-  default     = "us-west-2"
+  default     = "us-east-1"
 }
 
 variable "owner_cidr_blocks" {
