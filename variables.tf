@@ -19,7 +19,7 @@ variable "org" {
   description = "Terraform Cloud/Enterprise Organization Name"
 }
 
-variable "vpc_workspace" {
+variable "foundation_workspace" {
   type        = string
   description = "Name of workspace where VPC was created."
 }
